@@ -1,8 +1,11 @@
 Puppet::Type.type(:rabbitmq_plugin).provide(:rabbitmqplugins) do
 
-  has_command(:rabbitmqplugins, 'rabbitmq-plugins') do
-     is_optional
-     environment :HOME => "/tmp"
+  if Puppet::PUPPETVERSION.to_f < 3
+    commands :rabbitmqplugins => 'rabbitmq-plugins'
+  else
+    has_command(:rabbitmqplugins, 'rabbitmq-plugins') do
+      environment :HOME => "/tmp"
+    end
   end
 
   defaultfor :feature => :posix
@@ -26,7 +29,7 @@ Puppet::Type.type(:rabbitmq_plugin).provide(:rabbitmqplugins) do
   end
 
   def exists?
-    out = rabbitmqplugins('list', '-E').split(/\n/).detect do |line|
+    rabbitmqplugins('list', '-E').split(/\n/).detect do |line|
       line.split(/\s+/)[1].match(/^#{resource[:name]}$/)
     end
   end

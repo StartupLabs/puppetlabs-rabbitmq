@@ -1,10 +1,12 @@
 Puppet::Type.type(:rabbitmq_vhost).provide(:rabbitmqctl) do
 
-  has_command(:rabbitmqctl, 'rabbitmqctl') do
-     is_optional
-     environment :HOME => "/tmp"
+  if Puppet::PUPPETVERSION.to_f < 3
+    commands :rabbitmqctl => 'rabbitmqctl'
+  else
+     has_command(:rabbitmqctl, 'rabbitmqctl') do
+       environment :HOME => "/tmp"
+     end
   end
-  defaultfor :feature => :posix
 
   def self.instances
     rabbitmqctl('list_vhosts').split(/\n/)[1..-2].map do |line|

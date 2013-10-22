@@ -1,5 +1,5 @@
 name    'puppetlabs-rabbitmq'
-version '2.0.2'
+version '3.1.0'
 source 'git://github.com/puppetlabs/puppetlabs-rabbitmq.git'
 author 'puppetlabs'
 license 'Apache'
@@ -9,4 +9,5 @@ project_page 'http://github.com/puppetlabs/puppetlabs-rabbitmq'
 
 ## Add dependencies, if any:
 dependency 'puppetlabs/stdlib', '>= 2.0.0'
-dependency 'puppetlabs/apt', '>= 0.0.3'
+dependency 'puppetlabs/apt', '>= 1.0.0'
+dependency 'garethr/erlang', '>= 0.1.0'
